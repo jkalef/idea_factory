@@ -9,6 +9,8 @@
 <body>
 
   <div class="container">
+      <br>
+      <%= link_to "All Ideas", root_path %>
       <%#--only if the user is signed in----------------------------------------------%>
       <% if user_signed_in? %>
             <%= link_to "Sign Out", destroy_user_session_path, method: :delete, style: "float: right" %> 
@@ -16,16 +18,16 @@
       <% end %>
       <br>
 
-    <%#--FLASH MESSAGES--------------------------------%>
-    <%# use the nice alerts from bootstrap based on different cases %>
-      <% if flash[:notice] %>
-        <p class="alert alert-success"><%= flash[:notice] %></p>
-      <% elsif flash[:alert] %>
-        <p class="alert alert-danger"><%= flash[:alert] %></p>
-      <% end %>
+      <%#--FLASH MESSAGES--------------------------------%>
+      <%# use the nice alerts from bootstrap based on different cases %>
+        <% if flash[:notice] %>
+          <p class="alert alert-success"><%= flash[:notice] %></p>
+        <% elsif flash[:alert] %>
+          <p class="alert alert-danger"><%= flash[:alert] %></p>
+        <% end %>
 
-    <%#--PAGE CONTENT----------------------------------------%>
-    <%= yield %>
+      <%#--PAGE CONTENT----------------------------------------%>
+      <%= yield %>
   </div>
 
 

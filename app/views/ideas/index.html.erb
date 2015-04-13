@@ -36,32 +36,33 @@
   <%= link_to "View This Idea", idea %>
   <br>
 
-      <%#---FOR JOINING AN IDEA--------------------------------------------%>
+      <%#---FOR JOINING & LIKING AN IDEA--------------------------------------------%>
       <%# users cannot join an idea that they created. Hide those buttons in this case %>
       <% if idea.user.id != current_user.id %>
             <%# see if the user has already joined this idea %>
+
+            <%#--FOR JOINING AN IDEA-----------------------------------------%>
             <% join = idea.joins.find_by_user_id(current_user.id) %>
             <% if join %>
                 <%= link_to "Already Joined", idea_join_path(idea, join), method: :delete, class: "btn btn-success" %>
             <% else %>
                 <%= link_to "Join", idea_joins_path(idea), method: :post, class: "btn btn-success" %>
             <% end %>
-      <% end %>
-      <br>
+            <br>
 
-      <%#--FOR LIKING AN IDEA-----------------------------------------------%>
-      <%# users cannot like an idea that they created...hide those buttons in this case %>
-      <% if idea.user.id != current_user.id %>
-            <%# has the user already liked this idea? %>
+            <%#--FOR LIKING AN IDEA---------------------------------------------%>
             <% like = idea.likes.find_by_user_id(current_user.id) %>
             <% if like %>
                 <%= link_to "Unlike", idea_like_path(idea, like), method: :delete, class: "btn btn-success" %>
             <% else %>
                 <%= link_to "Like", idea_likes_path(idea), method: :post, class: "btn btn-success" %>
             <% end %>
+
+
       <% end %>
+      <br>
 
-
+   
   <%#---SHOW THE AMOUNT OF LIKES / MEMBERS -------------------------------------%>
   Members: <%= idea.users_who_joined.count %>  |
   Likes:  <%= idea.likes.count %>

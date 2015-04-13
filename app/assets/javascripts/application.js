@@ -20,6 +20,7 @@ $(document).ready(function () {
     //hide the form on loading the page
     $('.create-project-form').hide();
 
+    //show the form on toggle
     $('button').on('click', function() {
             $('.create-project-form').toggle( "slow" );
     });    
