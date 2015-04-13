@@ -1,0 +1,71 @@
+<h1>Welcome to The Idea Factory!</h1>
+<%#---BUTTON TO MAKE A NEW FORM ----------------------------------------%>
+  <button class="new-idea btn btn-danger">Create A New Idea</button> 
+  <br>
+  <br>
+
+  <%#--FORM TO CREATE A NEW IDEA **HIDDEN BY JQUERY--------------------------%>
+  <div class="create-project-form">
+    <%= form_for @idea do |f| %>
+      <%= f.text_field :title, {class: "form-control", placeholder: "Your super-amazing Idea Title here..." } %>
+      <br>
+      <%= f.text_area :body, {class: "form-control", rows: "10", placeholder: "All the details about your awesome idea here..."} %>
+      <br>
+      Add An Image: <%= f.file_field :picture %>
+      <br>
+      <%= f.submit "Submit Awesome Idea!" %>
+    <% end %>
+    <br>
+    <br>
+  </div>
+
+
+
+
+<%#--VIEW ALL OF THE OTHER IDEAS-------------------------------------%>
+<h2>All Ideas</h2>
+<hr>
+
+<% @ideas.each do |idea| %>
+  <h3><%= idea.title %></h3>
+  <br>
+  Idea Details: <%= idea.body %>
+  <br>
+  By: <%= idea.user.first_name %>
+  <br>
+  <%= link_to "View This Idea", idea %>
+  <br>
+
+      <%#---FOR JOINING AN IDEA--------------------------------------------%>
+      <%# users cannot join an idea that they created. Hide those buttons in this case %>
+      <% if idea.user.id != current_user.id %>
+            <%# see if the user has already joined this idea %>
+            <% join = idea.joins.find_by_user_id(current_user.id) %>
+            <% if join %>
+                <%= link_to "Already Joined", idea_join_path(idea, join), method: :delete, class: "btn btn-success" %>
+            <% else %>
+                <%= link_to "Join", idea_joins_path(idea), method: :post, class: "btn btn-success" %>
+            <% end %>
+      <% end %>
+      <br>
+
+      <%#--FOR LIKING AN IDEA-----------------------------------------------%>
+      <%# users cannot like an idea that they created...hide those buttons in this case %>
+      <% if idea.user.id != current_user.id %>
+            <%# has the user already liked this idea? %>
+            <% like = idea.likes.find_by_user_id(current_user.id) %>
+            <% if like %>
+                <%= link_to "Unlike", idea_like_path(idea, like), method: :delete, class: "btn btn-success" %>
+            <% else %>
+                <%= link_to "Like", idea_likes_path(idea), method: :post, class: "btn btn-success" %>
+            <% end %>
+      <% end %>
+
+
+  <%#---SHOW THE AMOUNT OF LIKES / MEMBERS -------------------------------------%>
+  Members: <%= idea.users_who_joined.count %>  |
+  Likes:  <%= idea.likes.count %>
+
+
+  <hr>
+<% end %>

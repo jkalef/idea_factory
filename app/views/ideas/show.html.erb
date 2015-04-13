@@ -1,0 +1,38 @@
+<h1>Showing Idea:</h1> 
+<h2><%= @idea.title %></h2>
+<br>
+<%= image_tag @idea.picture.url(:medium) %>
+<p><%= @idea.body %></p>
+<p>Created By: <%= @idea.user.first_name%></p>
+<br>
+
+<%#--View People who've joined this idea ----- %>
+<h3>People Who Have Joined this Project:</h3>
+<% @idea.users_who_joined.each do |user| %>
+  <%= user.first_name %>
+  <br>
+  <hr>
+<% end %>
+
+<hr>
+
+<br>
+<br>
+
+<h3>Comments:</h3>
+<% @comments.each do |comment| %>
+  <%= comment.body %>
+  <br>
+  By: <%= comment.user.first_name %>
+  <br>
+  <hr>
+<% end %>
+
+<h3>Add A Comment To This Idea</h3>
+
+<%# form to create a new commment-----------%>
+<%= form_for @comment, url: idea_comments_path(@idea) do |f| %>
+  <%= f.text_area :body, placeholder: "Your Comment Here...keep it clean!" %>
+  <br>
+  <%= f.submit %>
+<% end %>

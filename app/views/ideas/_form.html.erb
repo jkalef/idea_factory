@@ -1,0 +1,12 @@
+<%#--FORM TO CREATE A NEW IDEA--------------------------%>
+<div class="create-project-form">
+    <%= form_for @idea do |f| %>
+      <%= f.text_field :title, {class: "form-control", placeholder: "Your super-amazing Idea Title here..." } %>
+      <br>
+      <%= f.text_area :body, {class: "form-control", rows: "10", placeholder: "All the details about your awesome idea here..."} %>
+      <br>
+      Add An Image: <%= f.file_field :picture %>
+      <br>
+      <%= f.submit "Submit Awesome Idea!" %>
+    <% end %>
+</div>
