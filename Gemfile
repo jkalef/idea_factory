@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+gem 'jquery-turbolinks'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'hirb'
